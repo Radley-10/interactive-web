@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Time Zone</title>
+    <style>
+        body {
+            background-color: red;
+            font-family: 'Georgia', serif;
+            color: blue;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+        }
+        #timeDisplay {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+    <script>
+        function displayTime() {
+            const timeZoneOffsets = {
+                "est": -5,
+                "cst": -6,
+                "mst": -7,
+                "pst": -8,
+                "akst": -9,
+                "hst": -10
+            };
+
+            const selectedTimeZone = document.getElementById("timeZoneSelect").value;
+            const offset = timeZoneOffsets[selectedTimeZone];
+            const currentTime = new Date();
+            
+            // Calculate time in selected timezone
+            const utcTime = currentTime.getTime() + (currentTime.getTimezoneOffset() * 60000);
+            const timezoneTime = new Date(utcTime + (3600000 * offset));
+
+            // Display formatted time
+            document.getElementById("timeDisplay").innerText = "Current Time: " + timezoneTime.toLocaleTimeString();
+        }
+    </script>
+</head>
+<body>
+    <h1>View Time Zone</h1>
+    <p>Select a time zone:</p>
+    <select id="timeZoneSelect" onchange="displayTime()">
+        <option value="est">Eastern Standard Time (EST)</option>
+        <option value="cst">Central Standard Time (CST)</option>
+        <option value="mst">Mountain Standard Time (MST)</option>
+        <option value="pst">Pacific Standard Time (PST)</option>
+        <option value="akst">Alaska Standard Time (AKST)</option>
+        <option value="hst">Hawaii-Aleutian Standard Time (HST)</option>
+    </select>
+    <div id="timeDisplay">Current Time: </div>
+</body>
+</html>
